@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="sch.com.dao.yang.FunctionDao">
+ 	<!-- 获取用户的权限 -->
+ 	<select id="functionQuery" resultType="map">
+ 		select * from tb_power where power_view='1'
+ 	</select>
+ 	<!-- 根据pid获取权限 -->
+ 	<!--当用if判断时，若参数类型为integer时 要使用map或实体类封装，或者使用:power_pid = #{id,jdbcType = INTEGER} -->
+ 	<select id="functionQueryByPowerId" resultType="map" parameterType="java.util.Map">
+ 		select * from tb_power where power_status = 1 
+ 		<if test="id!=null">
+			and power_pid = #{id}
+		</if>
+		<if test="id==null">
+			and power_pid is null
+		</if>
+ 	</select>
+ 	<!-- 根据用户信息获取权限 -->
+ 	<select id="functionQueryByUserMap" resultType="map" parameterType="java.util.Map">
+ 		select distinct  p.* from tb_user u,tb_user_role ur,tb_role r,tb_role_power rp,tb_power p
+		where u.user_id = ur.user_id and ur.role_id = r.role_id and r.role_id = rp.role_id and rp.power_id = p.power_id and u.user_status= 1 and p.power_view = 1 and p.power_status = 1 and r.user_role_status=1
+		<if test="id!=null">
+			and p.power_pid = #{id}
+		</if>
+		<if test="id==null">
+			and p.power_pid is null
+		</if>
+		and u.user_id = #{userId} order by p.power_priority
+ 	</select>
+ 	<!-- 根据角色ID查找权限 -->
+ 	<select id="queryUrlByRoleId" resultType="map">
+ 		select p.* from tb_role_power rp,tb_power p 
+ 		where rp.power_id = p.power_id and power_status = 1 and rp.role_id = #{roleId}
+ 	</select>
+ 	<!-- 根据权限id修改权限 -->
+ 	<update id="functionUpdate" parameterType="sch.com.entity.Power">
+ 		update tb_power set power_name = #{powerName},power_key = #{powerKey},
+		power_view = #{powerView},power_road = #{powerRoad},power_pid = #{powerPid}
+		where power_id = #{powerId}
+ 	</update>
+ 	<!-- 根据权限id删除权限 -->
+ 	<update id="functionDelete" parameterType="int">
+ 		update tb_power set power_status='2' where power_id = #{id}
+ 	</update>
+ 	<!-- 根据权限id启用权限 -->
+ 	<update id="functionUp" parameterType="int">
+ 		update tb_power set power_status='1' where power_id = #{id}
+ 	</update>
+ 	<!-- 插入权限 -->
+ 	<insert id="functionInsert" parameterType="sch.com.entity.Power">
+ 		insert into tb_power values(seqPower.nextval,#{powerName},#{powerKey},#{powerView},'1',#{powerRoad},#{powerPriority},#{powerPid})
+ 	</insert>
+ </mapper>

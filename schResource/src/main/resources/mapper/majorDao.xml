@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sch.com.dao.zzy.Tb_majorDao">
+	<!-- 查询专业 -->
+	<select id="queryMajor" resultType="HashMap">
+		select m.major_name,m.major_id,i.institute_name,i.institute_personno,i.institute_dean from tb_user u,tb_major m, tb_institute i
+		where u.major_id = m.major_id and i.institute_id = m.institute_id 
+	</select>
+	<!-- 查询学院下的专业 -->
+	<select id="findMj" resultType="HashMap" parameterType="Integer">
+		select m.major_name,m.major_id,i.institute_name,i.institute_personno,i.institute_dean from tb_user u,tb_major m, tb_institute i
+		where u.major_id = m.major_id and i.institute_id = m.institute_id  and i.institute_id = #{selectId} 
+	</select>
+</mapper>

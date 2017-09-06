@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sch.com.dao.wymm.TbMajorDao">
+	<!-- 获得院下的专业 -->
+	<select id="TbMajorDaoQuery" parameterType="int" resultType="HashMap">
+		select * from tb_major m,tb_institute i where m.institute_id=i.institute_id and i.institute_id=#{institute_id}
+	</select> 
+	
+	<!-- 获得专业内的资源数量 -->
+	<select id="queryTbResourceUploadId" parameterType="int" resultType="Integer">
+		select count(r.resource_id) from tb_resource_upload r,tb_major m where m.major_id=r.major_id and m.major_id=#{major_id}
+	</select>
+	
+		
+</mapper>

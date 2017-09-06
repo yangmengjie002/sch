@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sch.com.dao.yxf.MajorSelectDao">
+<!--专业查询  -->
+	<select id="queryMajor" resultType="map">
+		select major_id,major_name
+		from tb_major
+
+	</select>
+<!-- 类型查询 -->	
+	<select id="queryResouceType" resultType="map">
+		select
+		resource_type_id,resource_type_name from tb_resource_type
+	</select>
+<!--资源请求插入  -->
+	<insert id="insertRequest" parameterType="sch.com.entity.yxf.ResourceRequest">
+		insert into tb_resource_request
+		values(sql_resource_request.nextval,
+		#{userId,jdbcType=NUMERIC},
+		#{resourceRequestTypeId,jdbcType=NUMERIC},
+		#{requestCause,jdbcType=VARCHAR},
+		#{requestTime,jdbcType=VARCHAR},
+		#{resourceRequestName,jdbcType=VARCHAR},
+		#{majorId,jdbcType=NUMERIC})
+	</insert>
+
+</mapper>
+

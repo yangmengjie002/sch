@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sch.com.dao.wymm.ResourceInfoDao">	
+	<!-- 获得已发布信息列表 -->
+	<select id="InfoQuery" resultType="HashMap"> 
+		select u.resource_name,u.resource_info,t.user_name,u.upload_date,u.resource_id from tb_resource_upload u,tb_user t where u.user_id=t.user_id and status_id=3
+	</select> 
+	
+</mapper>
+
+
+
+

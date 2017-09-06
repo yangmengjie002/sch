@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sch.com.dao.yxf.PersonRecordDao">
+	<select id="queryRequestRceord" parameterType="sch.com.entity.yxf.PerRecordPageCut" resultType="map">
+		select resource_request_id,
+		user_id,
+		user_name,
+		resource_request_type_id,
+		resource_type_name,
+		request_cause,
+		request_time,
+		resource_request_name,
+		major_id,
+		major_name
+		,request_status
+		from vw_person_resource_request
+		where 1=1 
+		<if test="userId !=null and userId !=0">
+			and	 user_id=#{userId}
+		</if>
+		<if test="page !=null and page!=' ' and page!=0 and rows!=null and rows!=' ' and rows!=0">
+			and r between ((#{page}-1)*(#{rows})) and
+			((#{page})*(#{rows})-1)
+		</if>
+	
+		
+
+	</select>
+
+
+</mapper>

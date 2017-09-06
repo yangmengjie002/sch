@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <!-- 对虚拟表vw_resource_upload进行查询 -->
+<mapper namespace="sch.com.dao.yxf.ResourceUploadDao">
+	<select id="queryResourceUpload" parameterType="sch.com.entity.yxf.ResourceUpload"
+		resultType="map">
+
+		select resource_id,resource_type_id,user_id,upload_site,status_id,resource_type_name
+		from
+		vw_resource_upload
+		where 1=1
+
+		<if test="resourceTypeName!=null and resourceTypeName!=' '">
+			and resource_type_name like '%'+#{resourceTypeName}+'%'
+		</if>
+		<if test="userId!=null and userId!=0">
+			and user_id=#{userId}
+		</if>
+		<if test="uploadDate!=null and uploadDate !=' ' ">
+			and upload_date={uploadDate}
+		</if>
+		<if test="statusId !=null and statusId !=0">
+			and status_id=#{statusId}
+		</if>
+
+		<if test="page !=null and page!=' ' and rows!=null and rows!=' '">
+			and r between ((#{page}-1)*(#{rows})) and
+			((#{page})*(#{rows})-1)
+		</if>
+	</select>
+	<insert id="insertResourceUpload" parameterType="sch.com.entity.yxf.ResourceFileUpload">
+		insert  into tb_resource_upload(resource_id,resource_type_id,user_id,upload_site,upload_date,resource_name,resource_info) values(seq_resource_upload.nextval,#{resourceTypeId},#{userId},#{uploadSite},#{uploadDate},#{resourceName},#{resourceInfo}) 
+	</insert>
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="sch.com.dao.yang.FileYDao">
+  	<!-- 搜索上传文件信息 -->
+  	<select id="getFileInfo">
+  		select * from tb_resource_upload where resource_id = #{id}
+  	</select>
+  	<!-- 插入下载资源表 -->
+  	<insert id="insertDownload" parameterType="map">
+  		insert into tb_resource_download values(seq_resource_download.nextval,#{resourceId},#{userId},#{downloadDate})
+  	</insert>
+  </mapper>

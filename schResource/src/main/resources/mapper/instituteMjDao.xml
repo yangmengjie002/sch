@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sch.com.dao.zzy.Tb_instituteDao">
+	<!-- 查询学院 -->
+	<select id="queryInst" resultType="HashMap">
+		select * from tb_institute order by tb_institute.institute_id asc
+	</select>
+	<!-- 插入学院 -->
+	<insert id="insertInst" parameterType="HashMap">
+		insert into tb_institute values(seq_institute.nextval,#{instName},#{instNo},#{instDean},0)
+	</insert>
+</mapper>

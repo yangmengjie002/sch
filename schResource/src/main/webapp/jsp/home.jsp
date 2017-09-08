@@ -24,6 +24,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <script type="text/javascript" src="http://localhost:9088/schResource/js/easyui/easyui-lang-zh_CN.js"></script>
   <link rel="stylesheet" href="http://localhost:9088/schResource/js/easyui/themes/icon.css" type="text/css"></link>
   <link rel="stylesheet" href="http://localhost:9088/schResource/js/easyui/themes/default/easyui.css" type="text/css"></link>
+  <!-- 导入ztree类库 -->
+<link rel="stylesheet"
+	href="http://localhost:9088/schResource/js/ztree/zTreeStyle.css"
+	type="text/css" />
+<script
+	src="http://localhost:9088/schResource/js/ztree/jquery.ztree.all-3.5.js"
+	type="text/javascript"></script>
+<script
+	src="http://localhost:9088/schResource/js/ztree/outOfBounds.js"
+	type="text/javascript"></script>
+	  
 	  <script type="text/javascript">
 		$(function(){
 			$('#tt').tree({    
@@ -59,7 +70,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    }]    
 					}); 
 				} 
-			}			
+			}	
+			
+		
+		// 页面加载后 右下角 弹出窗口
+		/**************/
+		window.setTimeout(function(){
+			$.messager.show({
+				title:"消息提示",
+				msg:'欢迎登录，${user.userName}！ <a href="javascript:void" onclick="top.showAbout();">联系管理员</a>',
+				timeout:5000
+			});
+		},3000);
+		/*************/
+		
+		$("#btnCancel").click(function(){
+			$('#editPwdWindow').window('close');
+		});
+			
+			
+			
+			
+			
 			// 退出登录
 			$("#logoutFun").click(function(){
 				$.messager.confirm('系统提示','您确定要退出本次登录吗?',function(isConfirm) {
@@ -129,22 +161,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</script>
   </head>
 	 <body class="easyui-layout">   
-	   <div data-options="region:'north',title:'',split:false" style="height:80px;padding:10px;background:url('./images/header_bg.png') no-repeat right;">
-			校园共享平台
+	   <div data-options="region:'north',title:'',split:false" style="height:80px;padding:10px;background:url('/schResource/images/header_bg.png') no-repeat right;">
+			<div>
+				<img src="/schResource/images/logo1.png" height="60"  border="0">
+				<img src="/schResource/images/log.png" height="60"  border="0">
+			</div>
 			<div id="sessionInfoDiv"
-			style="position: absolute;right: 5px;top:10px;">
+			style="position: absolute;right: 30px;top:10px;">
 			[<strong>${user.userName}</strong>]，欢迎你！
 		</div>
-		<div style="position: absolute; right: 5px; bottom: 10px; ">
+		<div style="position: absolute; right: 30px; bottom: 10px; ">
 			<a href="javascript:void(0);" class="easyui-menubutton"
 				data-options="menu:'#layout_north_kzmbMenu',iconCls:'icon-help'">控制面板</a>
-		</div>
-		<div id="layout_north_pfMenu" style="width: 120px; display: none;">
-			<div onclick="changeTheme('default');">default</div>
-			<div onclick="changeTheme('gray');">gray</div>
-			<div onclick="changeTheme('black');">black</div>
-			<div onclick="changeTheme('bootstrap');">bootstrap</div>
-			<div onclick="changeTheme('metro');">metro</div>
 		</div>
 		<div id="layout_north_kzmbMenu" style="width: 100px; display: none;">
 			<div id ="editPassword">修改密码</div>
@@ -153,12 +181,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div id="logoutFun">退出系统</div>
 		</div>
 	   </div>   
-	   <div data-options="region:'south',title:'',split:false" style="height:40px;font-size:20px;text-align:center;">
-	   		由第二组制作		
-	   </div>     
-	   <div data-options="region:'west',title:'系统菜单',split:true" style="width:200px;">
-	   	<p style="font-size:15px;color:green;">登录人：${user.userName}<p>
-	   		<ul id="tt"></ul>
+	   <div data-options="region:'south',border:false"
+		style="height:50px;padding:10px;background:url('/schResource/images/header_bg.png') no-repeat right;">
+		<table style="width: 100%;">
+			<tbody>
+				<tr>
+					<td style="width: 300px;">
+						<div style="color: #999; font-size: 8pt;">
+							 Powered by 第二组
+						</div>
+					</td>
+					<td style="width: *;" class="co1"><span id="online"
+						style="background: url('/schResource/images/online.png') no-repeat left;padding-left:18px;margin-left:3px;font-size:8pt;color:#005590;">在线人数:1</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div> 
+	   <div data-options="region:'west',title:'系统菜单',split:true" style="width:160px;">
+	   	<div class="easyui-accordion" fit="true" border="false">
+			<div title="基本功能" data-options="iconCls:'icon-mini-add'" style="overflow:auto">
+				<ul id="tt"></ul>
+			</div>
+		</div>
+	   			   		
 	   </div>   
 	   <div data-options="region:'center',title:''" style="padding:0px;background:#eee;">
 	   		<div id="tab" class="easyui-tabs" fit="true" border="false">   

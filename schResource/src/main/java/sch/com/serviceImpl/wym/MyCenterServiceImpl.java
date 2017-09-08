@@ -34,6 +34,17 @@ public class MyCenterServiceImpl implements MyCenterService{
 		}
 		return upload;
 	}
+
+	@Override
+	public List<HashMap<String, Object>> MyDownQuery(int a) {
+		return myCenterDao.MyDownQuery(a);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> MyCollectQuery(int a) {
+		// TODO Auto-generated method stub
+		return myCenterDao.MyCollectQuery(a);
+	}
 	
 	
 }

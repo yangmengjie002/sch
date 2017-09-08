@@ -23,4 +23,9 @@ public interface ResourceTypeYService {
 	 * @return
 	 */
 	public int DeleteResourceType(String arr);
+	/**
+	 * 获取资源信息
+	 * @return
+	 */
+	public List<Map<String, Object>> getResourceInfo();
 }

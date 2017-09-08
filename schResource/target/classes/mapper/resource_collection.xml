@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sch.com.dao.yxf.ResourceCollectDao">
+	<!-- 对tb_resource_collect进行插入 -->
+	<insert id="insertCollect" parameterType="sch.com.entity.yxf.ResourceCollection">
+		insert into
+		tb_resource_collect
+		values(sql_resource_collect.nextval,#{resourceId},#{userId},#{addTime})
+	</insert>
+	<!-- 对tb_resource_collect进行查询 -->
+	<select id="queryCollect" parameterType="int" resultType="map">
+		select
+		collect_id,
+		rc.resource_id resource_id,
+		ru.resource_name resource_name,
+		ru.user_id user_id,
+		 add_time
+		,rt.resource_type_name resource_type_name
+
+		from tb_resource_collect rc,tb_resource_upload ru,tb_resource_type rt
+		where rc.resource_id=ru.resource_id and
+		ru.resource_type_id=rt.resource_type_id
+		<if test="_parameter !=null and _parameter !=' ' and _parameter!=0">
+			and rc.user_id=#{_parameter}
+		</if>
+		
+	<!-- 	select
+		collect_id,
+		resource_id,user_id,add_time from
+		tb_resource_collect where
+		user_id=#{id} -->
+
+	</select>
+	<!-- 对tb_resource_collect进行删除 -->
+	<delete id="delCollect" parameterType="int">
+		delete from
+		tb_resource_collect
+		where resource_id=#{resourceId}
+	</delete>
+
+</mapper>

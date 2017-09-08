@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sch.com.dao.zzy.Tb_teacherStyleDao">
+	<!-- 获取名师风采 -->
+	<select id="findTeacher" resultType="HashMap">
+		select * from Tb_teacherStyle
+	</select>
+	<!-- 添加名师 -->
+	<insert id="insertTeacher" parameterType="HashMap">
+		insert into Tb_teacherStyle values(sql_teacherStyle.nextval,8,#{teacher_name},#{teacher_age},#{teacher_info},#{teacher_image},#{entry_date},#{teacher_six})
+	</insert>
+	<!-- 删除名师 -->
+	<delete id="deleteTeacher" parameterType="int">
+		delete from Tb_teacherStyle where Tb_teacherStyle.Teacher_Id = #{teacher_id}
+	</delete>
+</mapper>

@@ -71,13 +71,13 @@ public class BosRealm extends AuthorizingRealm{
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		User user = (User) principals.getPrimaryPrincipal();//获取用户
 		List<Map<String,Object>> list = null;//获取用户权限
-		if(user.getUserName().equals("admin")){
+		/*if(user.getUserName().equals("admin")){
 			//用户为超级管理员，获取所有权限。
 			list = fs.functionQuery();
-		}else{
+		}else{*/
 			//用户为普通用户，根据id获取权限
 			list = fs.functionQueryByUserId(user.getUserId());
-		}
+		/*}*/
 		//把权限赋给认证对象。
 		for (int i = 0; i < list.size(); i++) {
 			String key = list.get(i).get("POWER_KEY")+"";

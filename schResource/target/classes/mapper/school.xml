@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="sch.com.dao.yang.SchoolDao">
+ 	<!-- 获取学院信息 -->
+ 	<select id="getInstitute" resultType="map">
+ 		select * from tb_institute
+ 	</select>
+ 	<!-- 根据学院ID获取专业ID -->
+ 	<select id="getMajor" resultType="map">
+ 		select * from tb_major 
+		where institute_id = #{instituteId} 
+ 	</select>
+ 	<!-- 查询所有专业信息 -->
+ 	<select id="getAllMajor" resultType="map">
+ 		select * from tb_major
+ 	</select>
+ </mapper>

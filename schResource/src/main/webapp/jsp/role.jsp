@@ -22,6 +22,7 @@
   		$('#dg').datagrid({    
   		    url:'${pageContext.request.contextPath}/role/allUrl.do',
   		  	fitColumns:true,
+  		  	fit:true,
   		  	pagination:true,
   		    columns:[[    
   		        {field:'ROLE_ID',title:'角色编号',width:100,checkbox:true},    
@@ -65,15 +66,20 @@
 		 				    url:'${pageContext.request.contextPath}/role/url.do?roleId='+rows[0].ROLE_ID,
 		 				   	cascadeCheck:false,
 		 				    lines:true,
-		 				    checkbox:true 
+		 				    checkbox:true,
+		 				    onLoadSuccess:function(node,data){
+		 			          	var t = $(this);
+		 			      		if(data){
+		 			       			$(data).each(function(index,d){
+						 			   if(this.state == 'closed'){
+						 			       t.tree('expandAll');
+						 			   }
+		 			       			});
+		 			  			}
+		 			  
+		 					}
 		 				});
-		 				var node = $('#tt').tree('getSelected');//获取根节点
-		 				console.info(node);
-						if (node){
-							$('#tt').tree('expandAll', node.target);
-						} else {
-							$('#tt').tree('expandAll');
-						}	
+		 				
 	 					$("#myform").form("load",{
 	 						roleId:rows[0].ROLE_ID,
 	 						userRoleKeywords:rows[0].USER_ROLE_KEYWORDS,
@@ -174,6 +180,7 @@
 					        	$('#classInfo').dialog("close");
 					        	$.messager.progress('close');	// 如果提交成功则隐藏进度条
 					        	alert("添加成功");
+					        	parent.location.reload();
 					        	$('#dg').datagrid("reload");  	
 					        } 
 					        
@@ -182,6 +189,7 @@
 					        	$('#classInfo').dialog("close");
 					        	$.messager.progress('close');	// 如果提交成功则隐藏进度条
 					        	alert("编辑成功");
+					        	parent.location.reload();
 					        	$('#dg').datagrid("reload");  	
 					        } 
 					        

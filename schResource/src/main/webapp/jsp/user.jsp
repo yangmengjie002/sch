@@ -22,6 +22,7 @@
   		$('#dg').datagrid({    
   		    url:'${pageContext.request.contextPath}/user/info.do',
   		  	fitColumns:true,
+  		  	fit:true,
   		  	pagination:true,
   		  	pageSize:'5',
   		  	pageList:'[5,10,15,20,25,30]',
@@ -204,6 +205,7 @@
 					        	$('#classInfo').dialog("close");
 					        	$.messager.progress('close');	// 如果提交成功则隐藏进度条
 					        	alert("添加成功");
+					        	parent.location.reload();
 					        	$('#dg').datagrid("reload");  	
 					        } 				        
 					        if(data=="success2"){
@@ -211,6 +213,7 @@
 					        	$('#classInfo').dialog("close");
 					        	$.messager.progress('close');	// 如果提交成功则隐藏进度条
 					        	alert("编辑成功");
+					        	parent.location.reload();
 					        	$('#dg').datagrid("reload");  	
 					        }         
 					    }    

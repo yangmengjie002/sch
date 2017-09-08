@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sch.com.dao.yang.FunctionDao;
+import sch.com.entity.PageBean;
 import sch.com.entity.Power;
 import sch.com.service.yang.FunctionService;
 import sch.com.utils.BaseController;
@@ -17,9 +18,18 @@ public class FunctionServiceImpl implements FunctionService {
 	@Autowired
 	private FunctionDao fd;
 	@Override
-	public List<Map<String, Object>> functionQuery() {
+	public Map<String, Object> functionQuery(PageBean pb) {
 		// TODO Auto-generated method stub
-		return fd.functionQuery();
+		int startIndex = (pb.getPage()-1)*pb.getRows();
+		int endIndex = pb.getPage()*pb.getRows()+1;
+		pb.setStartIndex(startIndex);
+		pb.setEndIndex(endIndex);
+		List<Map<String, Object>> list = fd.functionQuery(pb);
+		int total = fd.getCountUrl();
+		Map<String, Object> urlMap = new HashMap<String, Object>();
+		urlMap.put("rows", list);
+		urlMap.put("total", total);
+		return urlMap;
 	}
 	
 	@Override
@@ -145,7 +155,5 @@ public class FunctionServiceImpl implements FunctionService {
 				treeList.add(map);
 			}
 			return treeList;
-	}
-
-	
+	}	
 }

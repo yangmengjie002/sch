@@ -9,7 +9,6 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
 	 <filter>
 		<description>权限控制shiro配置</description>
 		<filter-name>shiroFilter</filter-name>
@@ -18,6 +17,27 @@
 	<filter-mapping>
 		<filter-name>shiroFilter</filter-name>
 		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>UserFilter</filter-name>
+		<filter-class>sch.com.interceptors.UserFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>UserFilter</filter-name>
+		<url-pattern>/jsp/MyCenter.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>UserFilter</filter-name>
+		<url-pattern>/jsp/fileupload.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>UserFilter</filter-name>
+		<url-pattern>/file/download.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>UserFilter</filter-name>
+		<url-pattern>/wym/CollectInsert.do</url-pattern>
 	</filter-mapping>
 	
 	<servlet>

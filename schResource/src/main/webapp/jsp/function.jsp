@@ -15,7 +15,10 @@
   		$('#dg').datagrid({    
   		    url:'${pageContext.request.contextPath}/power/allUrl.do',
   		  	fitColumns:true,
+  		  	fit:true,
   		  	pagination:true,
+  		    pageSize:10,
+  		    pageList:[10,20,30,40,50],
   		    columns:[[    
   		        {field:'POWER_ID',title:'权限编号',width:100,checkbox:true},    
   		        {field:'POWER_NAME',title:'权限名',width:100},    
@@ -118,9 +121,11 @@
   		//父级节点
   		$('#cc').combobox({    
   		    url:'${pageContext.request.contextPath}/power/allUrl.do',
-  		  	panelHeight:'auto',
+  		  	//panelHeight:'auto',
   		    valueField:'POWER_ID',    
-  		    textField:'POWER_NAME'   
+  		    textField:'POWER_NAME',
+  		  	limitToList:true,
+  		    
   		});
   		
 		$('#dd').dialog({    

@@ -1,22 +1,200 @@
+<%@ page language="java" import="java.util.*"
+	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>upload</title>
+<link rel="stylesheet" type="text/css"
+	href="http://localhost:9088/schResource/js/bootstrap/upload/upload.css">
+<script type="text/javascript"
+	src="http://localhost:9088/schResource/bootstrap-3.3.7-dist/js/jquery-3.1.1.min.js"></script>
 
+<style type="text/css">
+.upload-span {
+	display: inline-block;
+	width: 120px;
+	height: 40px;
+	color: #FFFFFF;
+	text-align: center;
+	line-height: 40px;
+	background-color: blue;
+	border: 2px solid blue;
+	border-radius: 5px;
+	cursor: pointer;
+	letter-spacing: 2px;
+}
 
-    <%@ page language="java" contentType="text/html; charset=utf-8"  
-        pageEncoding="utf-8"%>  
-    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">  
-    <html>  
-    <head>  
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">  
-    <title>文件上传下载</title>  
-    </head>  
-    <body>  
-        <form action="http://localhost:9088/uploadDemo/rest/file/upload" method="post" enctype="multipart/form-data">  
-            选择文件:<input type="file" name="file" width="120px">  
-            <input type="submit" value="上传">  
-        </form>  
-        <hr>  
-        <form action="http://localhost:9088/uploadDemo/rest/file/down" method="get">  
-            <input type="submit" value="下载">  
-        </form>  
-    </body>  
-    </html>  
+.upload-mask {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 9;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(84, 84, 84, 0.3);
+	display: none;
+}
 
+.upload-component {
+	position: absolute;
+	z-index: 99;
+	top: 50%;
+	left: 50%;
+	margin-left: -120px;
+	margin-top: -60px;
+	width: 240px;
+	height: 120px;
+	background-color: #FFFFFF;
+	display: none;
+}
+
+.upload-close {
+	position: relative;
+	height: 30px;
+	background-color: rgb(234, 234, 234);
+}
+
+.upload-close span {
+	position: absolute;
+	right: 15px;
+	line-height: 30px;
+	cursor: pointer;
+}
+
+.upload-content, .confirm-cancel {
+	margin-top: 15px;
+}
+
+.progress {
+	position: relative;
+	width: 90%;
+	height: 22px;
+	margin-left: 4.88888%;
+	text-align: center;
+	line-height: 22px;
+	border: 1px solid #ccc;
+}
+
+.upload-text {
+	position: absolute;
+	z-index: 99999;
+	color: red;
+}
+
+.uploaded {
+	position: absolute;
+	left: 0;
+	z-index: 9999;
+	width: 0%;
+	height: 100%;
+	background-color: blue;
+	color: #FFFFFF;
+}
+
+.confirm-cancel span {
+	display: inline-block;
+	width: 60px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	background-color: #ccc;
+	cursor: wait;
+}
+
+.confirm {
+	margin-left: 40%;
+}
+
+.cancel {
+	margin-left: 10px;
+}
+</style>
+
+<script type="text/javascript">
+	$(function() {
+		$(function() {
+			var $uploadSpan = $('.upload-span');
+			var $uploadMask = $('.upload-mask');
+			var $uploadContent = $('.upload-component');
+			var $closeConfirmCancel = $('.upload-close-span,.confirm,.cancel');
+			var $uploadTextSpan = $('.upload-text');
+			function showMask() {
+				$(".upload-mask,.upload-component").css({
+					display : 'block'
+				});
+				progressBar();
+				$uploadSpan.off('click', showMask);
+			}
+			function hiddenMask() {
+				$uploadMask.css({
+					display : 'none'
+				});
+				$uploadSpan.on('click', showMask);
+			}
+			function closeConfirmCancel() {
+				$uploadContent.css({
+					display : 'none'
+				});
+				$uploadTextSpan.text('').next().css({
+					width : 0
+				});
+				hiddenMask();
+			}
+			// 模拟进度
+			function progressBar() {
+				var max = 100;
+				var init = 0;
+				var uploaded;
+				var test = setInterval(function() {
+					init += 5;
+					uploaded = parseInt(init / max * 100) + '%';
+					$uploadTextSpan.text(uploaded).next().css({
+						width : uploaded
+					});
+					if (init === 100) {
+						clearInterval(test);
+						$uploadTextSpan.text('上传完成');
+						$('.confirm-cancel span').css({
+							cursor : 'pointer'
+						});
+						$('.confirm').css({
+							backgroundColor : 'rgb(111,197,293)'
+						});
+						$('.cancel').css({
+							backgroundColor : 'rgb(175,194,211)'
+						})
+						$closeConfirmCancel.on('click', closeConfirmCancel);
+					} else {
+						$closeConfirmCancel.off('click', closeConfirmCancel);
+						$('.upload-close-span').on('click', function() {
+							clearInterval(test);
+							closeConfirmCancel();
+						});
+					}
+				}, 1000);
+			}
+			$uploadSpan.on('click', showMask);
+		})
+	})
+</script>
+</head>
+<body>
+	<span class="upload-span">开始上传文件</span>
+	<div class="upload-mask"></div>
+	<div class="upload-component">
+		<div class="upload-close">
+			<span class="upload-close-span">关闭</span>
+		</div>
+		<div class="upload-content">
+			<div class="progress">
+				<span class="upload-text"></span> <span class="uploaded"></span>
+			</div>
+			<div class="confirm-cancel">
+				<span class="confirm">确认</span> <span class="cancel">取消</span>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="upload/upload.js"></script>
+</body>
+</html>

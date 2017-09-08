@@ -49,4 +49,9 @@ public interface ResourceTypeYDao {
 	 * @return
 	 */
 	public int deleteResourceType(int id);
+	/**
+	 * 获取资源的所有信息
+	 * @return
+	 */
+	public List<Map<String, Object>> getResourceInfo();
 }

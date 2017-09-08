@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import sch.com.dao.yang.FileYDao;
+import sch.com.entity.ResourceYInfo;
 import sch.com.service.yang.FileYService;
 import sch.com.utils.DateUtils;
 @Service
@@ -31,5 +32,20 @@ public class FileYServiceImpl implements FileYService{
 		map.put("downloadDate", downloadDate);
 		fd.insertDownload(map);
 		return fileInfo;
+	}
+
+	@Override
+	public List<Map<String, Object>> getResourceInfoFix(String postfix) {
+		// TODO Auto-generated method stub
+		return fd.getResourceInfoFix(postfix);
+	}
+
+	@Override
+	public String fileUploadAll(ResourceYInfo resourceInfo) {
+		// TODO Auto-generated method stub
+		Date date = new Date();
+		String dateToStr = DateUtils.dateToStr(date);
+		resourceInfo.setUploadDate(dateToStr);
+		return fd.fileUploadAll(resourceInfo);
 	}
 }

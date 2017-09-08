@@ -1,11 +1,14 @@
 package sch.com.service.yang.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import sch.com.dao.wymm.ResourceInfoDao;
 import sch.com.dao.yang.ResourceTypeYDao;
 import sch.com.entity.ResourceYType;
 import sch.com.service.yang.ResourceTypeYService;
@@ -76,6 +79,20 @@ public class ResourceTypeYServiceImpl implements ResourceTypeYService{
 			return 1;
 		}
 		return 0;
+	}
+	@Override
+	public List<Map<String, Object>> getResourceInfo() {
+		// TODO Auto-generated method stub
+		
+		List<Map<String, Object>> resourceInfo = rd.getResourceInfo();
+		List<Map<String, Object>> treeList = new ArrayList<Map<String, Object>>();
+		for (int i = 0; i < resourceInfo.size(); i++) {
+			Map<String, Object> map = new HashMap<String,Object>();
+			map.put("value", resourceInfo.get(i).get("RESOURCE_NAME"));
+			map.put("label", resourceInfo.get(i).get("RESOURCE_NAME"));
+			treeList.add(map);
+		}
+		return treeList;
 	}
 
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sch.com.dao.wymm.HelpInsertDao">	
+	<!-- 插入资源求助表 -->
+	<select id="HelpInsert" parameterType="HashMap"> 
+		insert into tb_resource_request values(sql_resource_request.nextval,#{userid},#{typeid},#{requestCause},#{nowdate},#{ziname},#{majorid}) 
+	</select> 
+	
+	<!-- 根据所属类型name查询id -->
+	<select id="marIdQuery" resultType="Integer" parameterType="String">
+		select major_id from tb_major where major_name=#{majorname}
+	</select>
+	
+	<!-- 根据资源类型name查询id -->
+	<select id="typeIdQuery" resultType="Integer" parameterType="String">
+		select resourceRequestTypeID from tb_resource_request_type where typeName=#{typename}
+	</select>
+</mapper>
+
+
+
+

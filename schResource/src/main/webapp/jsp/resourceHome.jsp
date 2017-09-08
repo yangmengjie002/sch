@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8" isELIgnored="false" %>
+	pageEncoding="utf-8"  %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -83,11 +83,11 @@ ul.nav-tabs.affix {
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="/schResource/jsp/resourceInfo.jsp">文库专区 <span class="sr-only">(current)</span></a></li>
 				<li><a href="/schResource/jsp/teacherStyleHome.jsp">名师风采</a></li>
-				<li class="资源分享"><a href="" class="dropdown-toggle"
+				<li class="资源分享"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false">资源分享 <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="/schResource/jsp/fileUpload/fileUpload.jsp">分享</a></li>
+						<li><a href="/schResource/jsp/fileUpload/fileUpload.jsp">下载</a></li>
 						<li><a href="#">Another action</a></li>
 						<li><a href="#">Something else here</a></li>
 						<li role="separator" class="divider"></li>
@@ -101,7 +101,7 @@ ul.nav-tabs.affix {
 				<button type="submit" class="btn btn-default">搜索</button>
 			</form>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/schResource/jsp/resourceInfo.jsp">资料</a></li>
+				<li><a href="#">资料</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false">我的<span class="caret"></span></a>
@@ -154,7 +154,7 @@ ul.nav-tabs.affix {
 		<div class="col-xs-3" id="myScrollspy">
 			<ul class="nav nav-tabs nav-stacked" id="myNav">
 				<li class="active"><a href="#section-1">资讯中心</a></li>
-				<li><a href="/srcResource/jsp/resourceInfo.jsp">资源下载</a></li>
+				<li><a href="#section-2">资源下载</a></li>
 				<li><a href="#section-3">专业系院</a></li>
 				<li><a href="#section-4">资源排行</a></li>
 				<li><a href="#section-5">精品课程</a></li>
@@ -165,16 +165,7 @@ ul.nav-tabs.affix {
 				<span class="glyphicon-envelope btn-warning">资讯中心</span>
 			</h2>
 			<div>
-				<table>
-					<c:forEach items="${getList }" var="queryZx">
-						<tr>
-							<td>
-								<h4>
-									<a href="#">${queryZx.informationTitle }</a>
-								</h4>
-							</td>
-						</tr>
-					</c:forEach>
+				<table id="informTb" >
 				</table>
 			</div>
 			<hr>
@@ -193,7 +184,25 @@ ul.nav-tabs.affix {
 </body>
 </html>
 <script>
-
+	var informs = {};
+	var str = "";
+	$(function(){
+		//console.info(informs);
+		$.ajax({
+			url:'${pageContext.request.contextPath}/queryInformation.do',
+			dataType:'json',
+			success:function(data){
+				informs = data;
+				console.info(informs);
+				for(var i=0;i<informs.length;i++){
+					str += "<tr><td><h4><a>"+informs[i].informationTitle+"</a></h4></td></tr>";
+					str += "<tr><td>&nbsp;&nbsp;"+informs[i].informationContent+"</td></tr><hr/>";
+				}
+					$("#informTb").append(str);
+				
+			}
+		})
+	})
 
 
 	/* 附加导航（随屏幕滚动）

@@ -1,27 +1,22 @@
 package sch.com.web.yang;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import sch.com.entity.PageBean;
 import sch.com.entity.Power;
 import sch.com.entity.User;
 import sch.com.service.yang.FunctionService;
-import sch.com.utils.BaseController;
 
 @Controller
 @RequestMapping("/power")
@@ -40,14 +35,29 @@ public class FunctionController {
 		m.put("userId", user.getUserId());
 		return ft.functionQueryByUserMap(m);	
 	}
+	/**
+	 * 根据用户ID获取用户权限
+	 * @return
+	 */
+	@RequestMapping("/getFunction")
+	public List<Map<String,Object>> getFunctionByUserId(HttpSession session){
+		User user = (User) session.getAttribute("user");
+		List<Map<String, Object>> urlList = ft.functionQueryByUserId(user.getUserId());
+		for (int i = 0; i < urlList.size(); i++) {
+			urlList.get(i).put("id", urlList.get(i).get("POWER_ID"));
+			urlList.get(i).put("pid", urlList.get(i).get("POWER_PID"));
+		}
+		return urlList;
+	}
 	
 	/**
 	 * 获取所有权限信息
 	 * @param response
 	 */
 	@RequestMapping("/allUrl")
-	public List<Map<String,Object>> getAllUrl(){
-		return  ft.functionQuery();
+	public Map<String, Object> getAllUrl(PageBean pb){
+		System.out.println(pb.getPage()+":"+pb.getRows());
+		return  ft.functionQuery(pb);
 	}
 	/**
 	 * 根据ID禁用权限

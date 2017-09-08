@@ -56,8 +56,11 @@ public class FileUploadController {
 	//文件上传页面的数据的传输
 	@RequestMapping("/upload")
 	public void UpataPerPro(HttpServletResponse response,String  resourceName,String resourceInfo ,String uploadSite){
-		String []index=resourceName.split(".");
-		String type=index[1];
+		System.out.println("aaaaaaaaaaaaaaaaa"+uploadSite);
+		int m = uploadSite.indexOf(".");
+		
+		String type= uploadSite.substring(m+1);
+		System.out.println(type);
 		List<Map<String,Object>> list=rts.queryTypeId(type);
 		Object obj=list.get(0).get("RESOURCE_TYPE_ID");
 		int flag= Integer.parseInt(obj.toString());

@@ -22,6 +22,7 @@
   		$('#dg').datagrid({    
   		    url:"${pageContext.request.contextPath}/resourceType/typeInfo.do",
   		  	fitColumns:true,
+  		  	fit:true,
   		  	pagination:true,
   		    columns:[[    
   		        {field:'RESOURCE_TYPE_ID',title:'资源类型编号',width:100,checkbox:true},    

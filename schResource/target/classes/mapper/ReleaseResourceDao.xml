@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sch.com.dao.wymm.ReleaseResourceDao">
+	<!-- 获得资源发布列表 -->	
+	<select id="ReleaseResourceQuery" resultType="HashMap">
+		select * from view_release 
+	</select> 
+	
+	<!-- 插入资源审核表 -->
+	<insert id="ReleaseResourceInsert" parameterType="HashMap">
+		insert into tb_release values(seq_tb_release.nextval,#{resourceId},#{release_date},#{user_id})
+	</insert>
+	
+</mapper>

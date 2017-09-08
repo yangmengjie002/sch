@@ -4,7 +4,6 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<jsp:include page="../head.jsp"></jsp:include>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -30,15 +29,16 @@
 <script type="text/javascript" src="../../js/fileinput/js/fileinput.js"></script>
 <script type="text/javascript" src="../../js/fileinput/js/locales/zh.js"></script>
 <style>
+
 body {
-	background-color: #F0F0F0;
+	background-color: #DDDDDD;
 }
 
 #colpadding {
 	margin: 100px auto;
 	padding: 100px;
 	background-color: #FFFFFF;
-	width: 900px;
+	width: 700px;
 }
 
 #inputpadding {
@@ -49,6 +49,17 @@ body {
 #filediv {
 	width: 300px;
 }
+#table{
+	
+	width:500;
+}
+
+h3{
+	color:#007700;
+}
+h5{
+	color:#0000cc;
+}
 </style>
 <script type="text/javascript">
 	
@@ -58,10 +69,8 @@ body {
 <body>
 
 
-
-
 	<div id="colpadding">
-		<table>
+		<table class="table text-nowrap">
 
 			<tr>
 				<td>
@@ -71,13 +80,13 @@ body {
 							<h3>上传文件资料</h3>
 						</div>
 						<div id="inputpadding">
-							资源名称：<input type="text" name="resourceName" class="form-control"
+							<h5>资源名称：</h5><input style=" height:23px" type="text" name="resourceName" class="form-control"
 								id="resourceName" placeholder="请输入文件名称" onfocus="this.select()" /></br>
 							</br>
 							<div>
-								资源简介：
-								<textarea class="form-control base-textara" rows="5"
-									id="resourceInfo" name="resourceInfo" value="无">无</textarea>
+								<h5>资源简介：</h5>
+								<textarea style="width:500px; height:200px" class="form-control " 
+									id="resourceInfo" name="resourceInfo" placeholder="若无简介则输入无" ></textarea>
 							</div>
 
 						</div>
@@ -91,7 +100,12 @@ body {
 
 					<div id="Relevantdata">
 						<div class="form-group">
-							<label class="col-sm-2 control-label">文件上传</label>
+							<label class="col-sm-2 control-label"><h5>请选择相关文件</h5></label>
+							<div>此处可选择:&nbsp;<span style="color:#FF0000">"bmp", "jpg", "png", "tiff",
+								"gif", "pcx", "tga", "exif", "fpx", "svg",
+								"psd", "cdr", "pcd", "dxf", "ufo", "eps", "ai",
+								"raw", "WMF", "txt", "doc", "docx", "wps",
+								"exe"</span>&nbsp;等类型文件进行上传 </div>
 							<div class="col-sm-10">
 								<input type="file" class="myFile" id="fileSite"
 									style="position: absolute; bottom: 0; left: 0; font-size: 34px; opacity: 0; width: 92; height: 34" />
@@ -113,21 +127,21 @@ body {
 
 </body>
 
+
 </html>
 <script type="text/javascript">
 	//图片上传
 
-	$(".myFile")
-			.fileinput(
+	$(".myFile").fileinput(
 					{
 						language : 'zh',
 						uploadUrl : "http://localhost:9088/schResource/fileUpload/SaveFile.do",//上传地址
 						uploadAsync : true,//异步上传
-						autoReplace : false,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉。
+						autoReplace : true,//是否自动替换当前图片，设置为true时，再次选择文件， 会将当前的文件替换掉。
 						// showCaption:false,//是否显示简介
 						showUpload : false, //是否显示上传按钮
 						showRemove : true, //显示移除按钮
-						dropZoneEnabled : false,//是否显示拖拽区域
+						dropZoneEnabled :true,//是否显示拖拽区域
 						maxFileCount : 1,//上传数量
 						validateInitialCount : true,
 						allowedFileExtensions : [ "bmp", "jpg", "png", "tiff",
@@ -172,7 +186,7 @@ body {
 
 	//文件上传
 	function upload() {
-		//alert($("#resourceName").val()+"  "+$("#resourceInfo").val()+"  "+$("#uploadSite").html());
+		alert("  "+$("#uploadSite").html());
 		$.ajax({
 			url : "/schResource/fileUpload/upload.do",
 			type : "post",

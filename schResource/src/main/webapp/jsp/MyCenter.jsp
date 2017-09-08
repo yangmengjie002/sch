@@ -66,6 +66,12 @@
 	float: left;
 	margin-left: 5%;
 }
+#messages{
+	height:350px;
+}
+#money{
+	height:350px;
+}
 </style>
 
 
@@ -107,14 +113,14 @@
 							</div>
 							<!-- ---------------------- -->
 							<div role="tabpanel" class="tab-pane" id="messages">
-								<table id="tb1" class="table table-hover">
+								<table id="tb_down" class="table table-hover">
 									
 								</table>
 								
 							</div>
 							<!-- ---------------------- -->
 							<div role="tabpanel" class="tab-pane" id="money">
-								<table id="tb1" class="table table-hover">
+								<table id="tb_collect" class="table table-hover">
 									
 								</table>
 							
@@ -131,6 +137,7 @@
 		
 </body>
 	<script type="text/javascript">
+	//我的上传
 	$('#tb_upload').bootstrapTable({
 		url : "/schResource/wym/myUploadQuery.do",
 		striped : true, //是否显示行间隔色
@@ -139,7 +146,7 @@
 			title : '资源名称'
 		}, {
 			field : 'UPLOAD_DATE',
-			title : '上传时间'
+			title : '下载时间'
 		},
 		{
 			field : 'STATUS_NAME',
@@ -149,6 +156,55 @@
 			title : '审核意见'
 		}]
 	});
+	
+	//我的下载
+	$("#project").click(function(){
+		$('#tb_down').bootstrapTable({
+			url : "/schResource/wym/myDownQuery.do",
+			striped : true, //是否显示行间隔色
+			columns : [{
+				field : 'RESOURCE_NAME',
+				title : '资源名称'
+			}, 
+			{
+				field : 'TYPENAME',
+				title : '资源类型'
+			},
+			{
+				field : 'MAJOR_NAME',
+				title : '所属专业'
+			},{
+				field : 'DOWNLOAD_DATE',
+				title : '下载时间'
+			}]
+		});
+	});
+	
+	
+	//我的收藏
+	$("#moneyApp").click(function(){
+		$('#tb_collect').bootstrapTable({
+			url : "/schResource/wym/myCollectQuery.do",
+			striped : true, //是否显示行间隔色
+			columns : [{
+				field : 'RESOURCE_NAME',
+				title : '资源名称'
+			}, 
+			{
+				field : 'TYPENAME',
+				title : '资源类型'
+			},
+			{
+				field : 'MAJOR_NAME',
+				title : '所属专业'
+			},{
+				field : 'ADDTIME',
+				title : '下载时间'
+			}]
+		});
+	});
+	
+	
 	</script>
 
 </html>

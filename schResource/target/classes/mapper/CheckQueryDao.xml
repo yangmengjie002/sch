@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sch.com.dao.wymm.CheckQueryDao">	
+	<!-- 审核页面表格查询 -->
+	<select id="checkQuery" resultType="HashMap">
+		select * from view_check order by upload_date desc
+	</select> 
+	
+	<!-- 级联下拉专业查询 -->
+	<select id="checkMajQuery" resultType="HashMap" parameterType="String">
+		select * from tb_major m,tb_institute i where m.institute_id=i.institute_id and i.institute_name=#{institute_name}
+	</select> 
+	
+	<!-- 通过专业名称获得其ID -->
+	<select id="checkMajIDQuery" resultType="Integer" parameterType="String">
+		select major_id from tb_major where major_name=#{major_name}
+	</select> 
+	
+	
+	
+	<!-- 插入审核表 -->
+	<insert id="checkInsert" parameterType="HashMap">
+		insert into tb_check values(seq_tb_check.nextval,#{resourceId},#{checkIdea},#{checkStatuId},#{check_data}，#{user_id})
+	</insert>
+	
+	<!-- 更新资源上传表状态 -->
+	<update id="tbResourceUploadUpdate" parameterType="HashMap">
+		update tb_resource_upload set status_id=#{status_id} where resource_id=#{resourceId}
+	</update>
+	
+	<!-- 更新资源上传表所属类型 -->
+	<update id="tbUploadMajUpdate" parameterType="HashMap">
+		update tb_resource_upload set major_id=#{major_id} where resource_id=#{resourceId}
+	</update>
+</mapper>
+
+
+
+

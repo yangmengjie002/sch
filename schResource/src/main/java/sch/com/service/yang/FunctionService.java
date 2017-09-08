@@ -3,14 +3,16 @@ package sch.com.service.yang;
 import java.util.List;
 import java.util.Map;
 
+import sch.com.entity.PageBean;
 import sch.com.entity.Power;
 
 public interface FunctionService {
 	/**
 	 * 获取所有的权限
+	 * @param pb 
 	 * @return
 	 */
-	public List<Map<String , Object>> functionQuery();
+	public Map<String, Object> functionQuery(PageBean pb);
 	/**
 	 * 根据用户ID查找用户的权限
 	 * @param userId

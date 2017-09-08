@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sch.com.dao.wymm.Tb_InstituteDao">	
+	<!-- 查询院系 -->
+	<select id="Tb_InstituteAllQuery" resultType="sch.com.entity.Tb_Institute">
+		select * from Tb_Institute 
+	</select> 
+</mapper>

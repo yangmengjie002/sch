@@ -58,4 +58,14 @@ public class ResourceTypeYController {
 			return "error";
 		}		
 	}
+	/**
+	 * 获取已发布的资源名称
+	 * @return
+	 */
+	@RequestMapping("/resourceInfo")
+	public List<Map<String,Object>> getResourceInfo(){
+		return rt.getResourceInfo();
+	}
+	
+	
 }
